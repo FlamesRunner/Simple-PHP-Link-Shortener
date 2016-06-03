@@ -1,0 +1,4 @@
+DirectoryIndex index.php
+RewriteEngine On
+RewriteRule ^([^/d/]+)$ ../redirect.php?a=$1
+RewriteCond %{REQUEST_URI}  !(index.php) [NC]
