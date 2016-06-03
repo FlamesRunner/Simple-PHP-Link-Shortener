@@ -52,7 +52,7 @@ font-family: 'Lato', sans-serif;
 
 <div style="padding-top: 10%;"></div>
 
-<p style="text-align: center;">Designed by Andrew H.</p>
+<p style="text-align: center;"><?php echo $page_footer; ?></p>
 
 </div>
 
