@@ -13,7 +13,7 @@ If you have shell access, this should be trivial:
 
 Then, unzip the repository.
 
-    unzip master.zip && cd Rdirctor-Link-Shortener
+    unzip master.zip && cd Rdirctor-Link-Shortener-master
 
 Move the contents of interface/* to your webspace.
 For example:
