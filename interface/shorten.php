@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'ssl.php';
 
 $url = $_POST['url'];
 $ip = $_SERVER['REMOTE_ADDR'];

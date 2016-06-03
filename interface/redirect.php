@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'ssl.php';
 
 $shortcode = $_GET['a'];
 

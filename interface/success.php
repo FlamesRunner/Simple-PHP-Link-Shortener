@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'ssl.php';
 
 if (!isset($_COOKIE["shortcode"])){
 header("Location: /");
