@@ -10,16 +10,13 @@ header("Location: /?err=1");
 die();
 }
 
-function url_exists($webpage) {
-    if (!$fp = curl_init($webpage)) return false;
-    return true;
-}
+$handle = @fopen($url,'r');
+if($handle !== false){
 
-if (!url_exists(url)){
+} else {
 header("Location: /?err=1");
 die();
 }
-
 
 for ($i = 0; $i<6; $i++) 
 {
