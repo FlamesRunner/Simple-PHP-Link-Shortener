@@ -1,7 +1,7 @@
 <?php 
 include 'config.php'; 
 if ($show_counter == "no"){
- die("Counter disabled.")
+ die("Counter disabled.");
 }
 ?>
 
