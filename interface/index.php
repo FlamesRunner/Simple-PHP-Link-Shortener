@@ -65,12 +65,16 @@ if ($_GET['err'] === "1"){
 <br />
 <br />
 
+<?php
+if ($show_counter == "no"){
+
+} else {
+?>
 <script type="text/javascript">
 function changeiframe() {
         var browserFrame = document.getElementById("clickviewer");
         browserFrame.src= "click.php?id=" + document.getElementById("clickid").value;
 }
-
 </script>
 
 <!-- Modal -->
@@ -102,6 +106,7 @@ function changeiframe() {
 </div>
 
 <div style="text-align: center;"><button type="button" class="btn btn-default" data-toggle="modal" data-target="#statistics">View statistics</button></div>
+<?php } ?>
 <br>
 <p style="text-align: center;"><?php echo $page_footer; ?></p>
 
