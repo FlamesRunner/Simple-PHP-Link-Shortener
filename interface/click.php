@@ -1,4 +1,9 @@
-<?php include 'config.php'; ?>
+<?php 
+include 'config.php'; 
+if ($show_counter == "no"){
+ die("Counter disabled.")
+}
+?>
 
 <!DOCTYPE html>
 
