@@ -28,6 +28,10 @@ font-family: 'Lato', sans-serif;
 
 <?php
 $shortcode = $_GET['id'];
+if (!is_numeric($shortcode)){
+die("<br /><center><h3>An invalid short code was supplied.</h3></center>");
+}
+
 if (empty($shortcode)){
 die("<br /><center><h3>Please enter your short code.</h3></center>");
 } else {
