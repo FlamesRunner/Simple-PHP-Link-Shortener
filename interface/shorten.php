@@ -10,6 +10,17 @@ header("Location: /?err=1");
 die();
 }
 
+function url_exists($webpage) {
+    if (!$fp = curl_init($webpage)) return false;
+    return true;
+}
+
+if (!url_exists(url)){
+header("Location: /?err=1");
+die();
+}
+
+
 for ($i = 0; $i<6; $i++) 
 {
     $a .= mt_rand(0,9);
