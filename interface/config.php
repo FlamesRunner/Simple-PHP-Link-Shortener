@@ -7,6 +7,8 @@
 
 $require_ssl = "no";
 
+$show_counter = "yes";
+
 // Website URL (do not add a trailling slash at the end of the URL)
 
 $url = "https://rdirct.xyz";
