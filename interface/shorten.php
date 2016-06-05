@@ -11,9 +11,7 @@ die();
 }
 
 $handle = @fopen($url,'r');
-if($handle !== false){
-
-} else {
+if($handle == false){
 header("Location: /?err=1");
 die();
 }
