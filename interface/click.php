@@ -14,7 +14,7 @@ if ($show_counter == "no"){
         <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <style type="text/css">
             body {
-            font-family: 'Lato', sans-serif;
+                font-family: 'Lato', sans-serif;
             }
         </style>
         <title><?php echo $page_title; ?></title>
