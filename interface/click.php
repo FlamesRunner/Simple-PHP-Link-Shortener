@@ -32,11 +32,9 @@ if ($show_counter == "no"){
             die("<br /><center><h3>An invalid short code was supplied.</h3></center>");
         }
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        $newurl = $row["url"];
-        $counter = $row['counter'];
         echo '<br /><center><h3>Full URL:</h3>';
-        echo '<p>'.$newurl.'</p>';
-        echo '<p>It has gained '.$counter.' views. Nice job!</p></center>';
+        echo '<p>'. $row["url"] .'</p>';
+        echo '<p>It has gained '. $row['counter'] .' views. Nice job!</p></center>';
     }
     ?>
     </body>
