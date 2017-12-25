@@ -1,33 +1,18 @@
-# Rdirctor Link Shortener
+# Simple PHP Link Shortener
 
-This repository holds the https://rdirct.xyz link shortener code.
+Self-hosted, lightweight PHP Link shortener for your website.
 
 It is licensed under the GNU GPLv3 license.
 
-##Installation
+## Installation
 
-You need to first upload the files in this repository to your server.
-If you have shell access, this should be trivial:
+To install it, simply import the SQL file using the command line or some web interface (e.g phpMyAdmin). 
+Make sure the table is named linkTable.
 
-    cd ~ && wget https://github.com/FlamesRunner/Rdirctor-Link-Shortener/archive/master.zip
+Set the values in config.php as you wish. For example, you may add some advertising code to the footer variable.
 
-Then, unzip the repository.
+Lastly, please make sure you rename htaccess in the directory a/ to .htaccess.
 
-    unzip master.zip && cd Rdirctor-Link-Shortener-master
+Good luck, and enjoy!
 
-Move the contents of interface/* to your webspace.
-For example:
 
-    mv interface/* /var/www/html/
-
-However, a .htaccess file is involved thus we need to rename htaccess to .htaccess in the a/ folder.
-
-    cd /var/www/html/a && mv htaccess .htaccess
-
-All that's left is for you to create a database and restore the table included in the repository.
-
-    mysql -umysqlusername -pmysqlpassword yourdatabasename < ~/Rdirctor-Link-Shortener-master/mysqldata/urldata.sql
-
-Fill the MySQL credentials used for this into /var/www/html/config.php. Inside the configuration file, you will be able to configure the page title, MySQL details, advertising code, etc. 
-
-Happy link shortening!
