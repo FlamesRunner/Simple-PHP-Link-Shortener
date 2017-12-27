@@ -2,7 +2,7 @@
 require 'config.php';
 
 if (empty($_POST['url'])) die('<div class="alert alert-warning">Please enter an address.</div>');
-if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) die('<div class="alert alert-danger">Invalid address.</div>');
+if (filter_var($_POST['url'], FILTER_VALIDATE_URL) === FALSE) die('<div class="alert alert-danger">Invalid address.</div>');
 
 $analytics = ($_POST['enableAnalytics'] == "on") ? 0 : -1;
 function generateRandomString($length = 10) {
