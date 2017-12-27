@@ -1,6 +1,8 @@
 <?php 
 require 'config.php'; 
-if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
+if ($require_ssl) {
+    if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,7 +10,9 @@ if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
             <title><?php echo $site_title; ?></title>
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>            <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>            
+            <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+            <?php if ($recaptcha) echo "<script src='https://www.google.com/recaptcha/api.js'></script>"; ?>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <style>
@@ -55,7 +59,7 @@ if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
                             <span class="input-group-addon">Address to shorten</span>
                             <input class="form-control" type="url" name="url" id="url" placeholder="http://lowendtalk.com" />
                             <span class="input-group-btn">
-                                <input class="btn btn-primary" type="submit" name="submitBtn" value="Shorten" />
+                                <input class="btn btn-primary g-recaptcha" onclick="lockInput()" type="submit" name="submitBtn" value="Shorten" data-callback="continueSubmit" data-sitekey="<?php echo $recaptcha_publickey; ?>" />
                             </span>
                         </div>
                         <br />
@@ -70,10 +74,15 @@ if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
                 </div>
             </div>
             <script>
+                function lockInput() {
+                    $("input[name=url]").prop("readonly", true);
+                    $("input[name=submitBtn]").prop("disabled", true);
+                }
+                function continueSubmit(token) {
+                    $("#shortenForm").submit();
+                }
                 $(document).ready(function() {
                     $("#shortenForm").submit(function(event) {
-                        $("input[name=url]").prop("readonly", true);
-                        $("input[name=submitBtn]").prop("disabled", true);
                         event.preventDefault();   
                         var req = $.post("shorten.php", $("#shortenForm").serialize());
                         req.done(function(data) {
@@ -81,6 +90,7 @@ if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
                             $("input[name=url]").prop("readonly", false);
                             $("input[name=submitBtn").prop("disabled", false);
                         });
+                        grecaptcha.reset();
                     });
                     $("#statisticsQuery").submit(function(event) {
                         $("input[name=shortcode]").prop("readonly", true);

@@ -1,7 +1,34 @@
 <?php
 require 'config.php';
+session_start();
+
+if ($ratelimit > 0) {
+    $date = date_create();
+    if ($_SESSION['last_generated']+60 <= date_timestamp_get($date)) $_SESSION['generated'] = 0;
+    if ($_SESSION['generated'] >= $ratelimit) die('<div class="alert alert-warning">Only 3 links can be generated every minute.</div>');
+}
+
+if ($recaptcha) {
+$fields = array(
+	'secret' => $recaptcha_secret,
+	'response' => $_POST['g-recaptcha-response'],
+	'remoteip' => $_SERVER['REMOTE_ADDR']
+);
+foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+rtrim($fields_string, '&');
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+curl_setopt($ch, CURLOPT_POST, count($fields));
+curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+$result = curl_exec($ch);
+curl_close($ch);
+$responseArray = json_decode($result, TRUE);
+if (!$responseArray["success"]) die('<div class="alert alert-warning">Human verification failed.</div>');
+}
 
 if (empty($_POST['url'])) die('<div class="alert alert-warning">Please enter an address.</div>');
+
 if (filter_var($_POST['url'], FILTER_VALIDATE_URL) === FALSE) die('<div class="alert alert-danger">Invalid address.</div>');
 
 $analytics = ($_POST['enableAnalytics'] == "on") ? 0 : -1;
@@ -38,6 +65,10 @@ try {
     $query->bindParam(':submittedBy', $_SERVER['REMOTE_ADDR']);
     $query->execute();
     $request = ($require_ssl == true) ? "https://" : "http://";
+    if ($ratelimit > 0) {
+        $_SESSION['generated']++;
+        $_SESSION['last_generated'] = date_timestamp_get($date);
+    }
     $newURL = $request . $site_url . '/' . $link_directory . '/' . $string;
     echo '<div class="alert alert-success">Your link was shortened to: <a href="' . $newURL . '" target="_blank">' . $newURL . '</a>';
 } catch(PDOException $e) {
