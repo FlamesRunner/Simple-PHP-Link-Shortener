@@ -12,7 +12,7 @@ try {
     $query->execute();
     if ($query->rowCount() == 0) header("Location: " . $request . $site_url);
     $urldata = $query->fetch();
-    if ($urldata["clicks"] !== -1) {
+    if ($urldata["clicks"] !== "-1") {
         $updateClicks = $dbh->prepare('UPDATE linkTable set clicks = clicks + 1 where shortCode = :shortCode');
         $updateClicks->bindParam(':shortCode', $_GET['url']);
         $updateClicks->execute();
