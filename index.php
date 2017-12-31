@@ -1,8 +1,6 @@
 <?php 
 require 'config.php'; 
-if ($require_ssl) {
-    if (empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
-}
+if ($require_ssl && empty($_SERVER['HTTPS'])) header("Location: https://" . $site_url);
 ?>
 <!DOCTYPE html>
 <html>
